@@ -35,22 +35,31 @@ async def main():
             print(f"Status: {resp.status}")
             print(await resp.json(content_type=None))
 
-        # 5. Редактировать
-        print("\n=== Редактирование ===")
-        async with session.put(
+        # 5. Частично редактировать (PATCH)
+        print("\n=== Частичное редактирование (PATCH) ===")
+        async with session.patch(
             f"{base_url}/ads/1",
             json={"title": "Продам горный велосипед"}
         ) as resp:
             print(f"Status: {resp.status}")
             print(await resp.json(content_type=None))
 
-        # 6. Удалить
+        # 6. Полностью редактировать (PUT)
+        print("\n=== Полное редактирование (PUT) ===")
+        async with session.put(
+            f"{base_url}/ads/1",
+            json={"title": "Велосипед горный", "description": "Состояние нового", "owner": "Иван Иванов"}
+        ) as resp:
+            print(f"Status: {resp.status}")
+            print(await resp.json(content_type=None))
+
+        # 7. Удалить
         print("\n=== Удаление ===")
         async with session.delete(f"{base_url}/ads/2") as resp:
             print(f"Status: {resp.status}")
             print(await resp.json(content_type=None))
 
-        # 7. Проверка после удаления
+        # 8. Проверка после удаления
         print("\n=== После удаления ===")
         async with session.get(f"{base_url}/ads") as resp:
             print(f"Status: {resp.status}")
